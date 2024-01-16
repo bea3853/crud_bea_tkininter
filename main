@@ -1,0 +1,54 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def create_item():
+    item = item_entry.get()
+    if item:
+        items_listbox.insert(tk.END,item)
+        item_entry.delete(0, tk.END)
+
+def read_item():
+    selected_index = items_listbox.curselection()
+    if selected_index:
+        item = items_listbox.get(selected_index)
+        messagebox.showinfo("Item Selecionado", f"Item: {item}")
+
+def update_item():
+    selected_index = items_listbox.curselection()
+    if selected_index:
+        new_item = item_entry.get()
+        if new_item:
+            items_listbox.delete(selected_index)
+            items_listbox.insert(selected_index[0], new_item)
+            item_entry.delete(0, tk.END)
+
+def delete_item():
+    selected_index = items_listbox.curselection()
+    if selected_index:
+        items_listbox.delete(selected_index)
+
+app = tk.Tk()
+app.title("CRUD com Tkinter")
+
+item_label = tk.Label(app, text="Item:")
+item_label.pack()
+
+item_entry = tk.Entry(app)
+item_entry.pack()
+
+create_button = tk.Button(app, text="Criar", command=create_item)
+create_button.pack()
+
+read_button = tk.Button(app, text="Ler", command=read_item)
+read_button.pack()
+
+update_button = tk.Button(app, text="Atualizar", command=update_item)
+update_button.pack()
+
+delete_button = tk.Button(app, text="Excluir", command=delete_item)
+delete_button.pack()
+
+items_listbox = tk.Listbox(app, width=30, height=10)
+items_listbox.pack()
+
+app.mainloop()
